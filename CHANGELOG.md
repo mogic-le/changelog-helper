@@ -4,6 +4,8 @@ All notable changes to the changelog-helper will be documented in this file.
 
 ## [unreleased]
 
+## [0.9.6] - 2024-12-10
+
 ## [0.9.5] - 2024-12-10
 
 ## [0.9.4] - 2024-12-10
@@ -166,6 +168,7 @@ All notable changes to the changelog-helper will be documented in this file.
 - Initial commands for adding and releasing
 
 [unreleased]: https://github.com/mogic-le/changelog-helper/compare/develop...main
+[0.9.6]: https://github.com/mogic-le/changelog-helper/compare/v0.9.5...v0.9.6
 [0.9.5]: https://github.com/mogic-le/changelog-helper/compare/v0.9.4...v0.9.5
 [0.9.4]: https://github.com/mogic-le/changelog-helper/compare/v0.9.3...v0.9.4
 [0.9.3]: https://github.com/mogic-le/changelog-helper/compare/v0.9.2...v0.9.3
