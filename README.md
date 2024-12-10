@@ -28,19 +28,19 @@ To get a link index in your CHANGELOG, you have to set a env variable. Add it in
 
 #### Add entry
 
-You can run a one-liner using the `changelog:add` command:
+You can run a one-liner using the `add` command:
 
-    changelog-helper changelog:add [added,changed,deprecated,fixed,...] This is a new entry line
+    changelog-helper add [added,changed,deprecated,fixed,...] This is a new entry line
 
 Or you can use the same command in a interactive mode:
 
-    changelog-helper changelog:add
+    changelog-helper add
 
 #### Add entry based on commits
 
 You can use the same command in a interactive mode:
 
-    changelog-helper changelog:add-commit
+    changelog-helper add-commit
 
 #### Add new release
 
@@ -50,11 +50,11 @@ Optional: it commits the CHANGELOG.md changes and creates a tag on top of the la
 
 You can use run a one-liner:
 
-    changelog-helper changelog:release [major|minor|patch] 1|0
+    changelog-helper release [major|minor|patch] 1|0
 
 Or you can use the same command in a interactive mode:
 
-    changelog-helper changelog:release
+    changelog-helper release
 
 ### Environmet variables
 
