@@ -14,7 +14,7 @@ class ChangelogHelper
 
     public static function path(): string
     {
-        $path = config('changelog.path', base_path());
+        $path = getcwd();
 
         if (! is_file($path)) {
             $addFileName = true;
