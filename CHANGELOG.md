@@ -4,6 +4,12 @@ All notable changes to the changelog-helper will be documented in this file.
 
 ## [unreleased]
 
+## [0.9.2] - 2024-12-10
+
+### Fixed
+
+- Code style
+
 ## [0.9.1] - 2024-12-10
 
 ## [0.9.0] - 2024-12-10
