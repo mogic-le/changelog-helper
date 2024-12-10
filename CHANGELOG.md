@@ -4,6 +4,8 @@ All notable changes to the changelog-helper will be documented in this file.
 
 ## [unreleased]
 
+## [0.9.4] - 2024-12-10
+
 ### Changed
 
 - Set env dir in bootstrap
@@ -162,6 +164,7 @@ All notable changes to the changelog-helper will be documented in this file.
 - Initial commands for adding and releasing
 
 [unreleased]: https://github.com/mogic-le/changelog-helper/compare/develop...main
+[0.9.4]: https://github.com/mogic-le/changelog-helper/compare/v0.9.3...v0.9.4
 [0.9.3]: https://github.com/mogic-le/changelog-helper/compare/v0.9.2...v0.9.3
 [0.9.2]: https://github.com/mogic-le/changelog-helper/compare/v0.9.1...v0.9.2
 [0.9.1]: https://github.com/mogic-le/changelog-helper/compare/v0.9.0...v0.9.1
