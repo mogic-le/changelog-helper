@@ -16,11 +16,11 @@
         }
     ],
     "require": {
-        "php": "^8.2.0",
-        "laravel-zero/phar-updater": "^1.4"
+        "php": "^8.2.0"
     },
     "require-dev": {
         "laravel-zero/framework": "^11.0.2",
+        "laravel-zero/phar-updater": "^1.4",
         "phlak/semver": "^6.0",
         "spatie/laravel-package-tools": "^1.17",
         "laravel/pint": "^1.18.1",
