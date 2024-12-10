@@ -8,6 +8,6 @@ return [
         'unreleased_link' => env('CHANGELOG_UNRELEASED_LINK', ''),
         'main_branch' => env('CHANGELOG_LINK_MAIN_BRANCH', 'main'),
         'develop_branch' => env('CHANGELOG_LINK_DEVELOP_BRANCH', 'develop'),
-
     ],
+    'release_message' => env('CHANGELOG_RELEASE_MESSAGE', 'Release version {version}'),
 ];

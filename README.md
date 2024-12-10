@@ -56,6 +56,9 @@ Or you can use the same command in a interactive mode:
 
     changelog-helper changelog:release
 
+### Environmet variables
+
+* CHANGELOG_RELEASE_MESSAGE
 
 ## License
 

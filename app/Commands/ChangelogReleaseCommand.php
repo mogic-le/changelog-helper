@@ -60,7 +60,7 @@ class ChangelogReleaseCommand extends Command implements PromptsForMissingInput
         $this->comment('New version released successfully');
 
         if ($tag) {
-            exec('git add CHANGELOG.md && git commit -m "Release version '.config('changelog.version_prefix').$version.'"');
+            exec('git add CHANGELOG.md && git commit -m "' . str_replace('{version}', config('changelog.version_prefix').$version, config('changelog.release_message')).'"');
             exec('git tag '.config('changelog.version_prefix').$version);
             $this->comment('Tag created successfully');
         }
