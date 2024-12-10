@@ -20,13 +20,16 @@ jobs:
     - name: Prepare Phar for upload
       run: |
         mv builds/changelog-helper builds/changelog-helper.phar
+    
+    - uses: CSchoel/release-notes-from-changelog@v1
 
     - name: Create GitHub Release
       id: create_release
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
       with:
         files: |
           builds/changelog-helper.phar
+        body_path: RELEASE.md
 
   docker-release:
     name: Docker
