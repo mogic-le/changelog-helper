@@ -25,7 +25,7 @@ class ChangelogReleaseCommand extends Command implements PromptsForMissingInput
                 default: ChangelogReleaseLevel::MINOR->value,
             ),
             'tag' => fn () => confirm(
-                label: 'Create a tag?',
+                label: 'Commit and create a tag?',
                 default: false
             ),
         ];
@@ -60,6 +60,7 @@ class ChangelogReleaseCommand extends Command implements PromptsForMissingInput
         $this->comment('New version released successfully');
 
         if ($tag) {
+            exec('git add CHANGELOG.md && git commit -m "Release version '.config('changelog.version_prefix').$version . '"');
             exec('git tag '.config('changelog.version_prefix').$version);
             $this->comment('Tag created successfully');
         }
