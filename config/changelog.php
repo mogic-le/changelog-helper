@@ -2,7 +2,7 @@
 
 return [
     'package_name' => env('APP_NAME', 'Changelog-Helper'),
-    'path' => base_path(),
+    'path' => getcwd(),
     'version_prefix' => env('CHANGELOG_VERSION_PREFIX', 'v'),
     'links' => [
         'unreleased_link' => env('CHANGELOG_UNRELEASED_LINK', ''),
