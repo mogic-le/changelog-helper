@@ -4,6 +4,12 @@ All notable changes to the changelog-helper will be documented in this file.
 
 ## [unreleased]
 
+## [0.7.5] - 2024-12-10
+
+### Fixed
+
+- Code style
+
 ## [0.7.4] - 2024-12-10
 
 ## [0.7.3] - 2024-12-10
@@ -120,6 +126,7 @@ All notable changes to the changelog-helper will be documented in this file.
 - Initial commands for adding and releasing
 
 [unreleased]: https://github.com/mogic-le/changelog-helper/compare/develop...main
+[0.7.5]: https://github.com/mogic-le/changelog-helper/compare/v0.7.4...v0.7.5
 [0.7.4]: https://github.com/mogic-le/changelog-helper/compare/v0.7.3...v0.7.4
 [0.7.3]: https://github.com/mogic-le/changelog-helper/compare/v0.7.2...v0.7.3
 [0.7.2]: https://github.com/mogic-le/changelog-helper/compare/v0.7.1...v0.7.2
