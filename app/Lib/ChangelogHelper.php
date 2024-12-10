@@ -147,6 +147,8 @@ class ChangelogHelper
                 $link = str_replace($linkMeta['main_branch'], $versionPrefix.$release, $link);
                 if ($max > $i) {
                     $link = str_replace($linkMeta['develop_branch'], $versionPrefix.$links[$i], $link);
+                } else {
+                    $link = str_replace($linkMeta['develop_branch'], $versionPrefix.$links[$i-1], $link);
                 }
             }
 
