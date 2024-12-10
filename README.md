@@ -32,7 +32,7 @@ You can run a one-liner using the `changelog:add` command:
 
     changelog-helper changelog:add [added,changed,deprecated,fixed,...] This is a new entry line
 
-You can use the same command in a interactive mode:
+Or you can use the same command in a interactive mode:
 
     changelog-helper changelog:add
 
@@ -44,7 +44,15 @@ You can use the same command in a interactive mode:
 
 #### Add new release
 
-You can use the same command in a interactive mode:
+The release command creates a new release, based on your optional unreleased changes.
+
+Optional: it commits the CHANGELOG.md changes and creates a tag on top of the last commit.
+
+You can use run a one-liner:
+
+    changelog-helper changelog:release [major|minor|patch] 1|0
+
+Or you can use the same command in a interactive mode:
 
     changelog-helper changelog:release
 
