@@ -11,7 +11,7 @@ use function Laravel\Prompts\select;
 
 class ChangelogAddCommand extends Command implements PromptsForMissingInput
 {
-    public $signature = 'changelog:add {type : The log type} {description* : The description of the changes}';
+    public $signature = 'add {type : The log type} {description* : The description of the changes}';
 
     public $description = 'Add a new changelog entry to the changelog file';
 

@@ -13,7 +13,7 @@ use function Laravel\Prompts\textarea;
 
 class ChangelogAddCommitCommand extends Command implements PromptsForMissingInput
 {
-    public $signature = 'changelog:add-commit {type : The log type}';
+    public $signature = 'add-commit {type : The log type}';
 
     public $description = 'Add a new changelog entry based on last commit';
 

@@ -12,7 +12,7 @@ use function Laravel\Prompts\select;
 
 class ChangelogReleaseCommand extends Command implements PromptsForMissingInput
 {
-    public $signature = 'changelog:release {level : The release level} {tag : Try to create a git tag}';
+    public $signature = 'release {level : The release level} {tag : Try to create a git tag}';
 
     public $description = 'Create a new release of unreleased changes';
 
