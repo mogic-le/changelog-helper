@@ -18,11 +18,11 @@ Changelog-Helper was created by [Stefan Berger](https://github.com/mogic-le) fro
 
 Via Composer
 
-  composer global require mogic/changelog-helper
+    composer global require mogic/changelog-helper
 
-To get a link index in your CHANGELOG, you have to set a env variable:
+To get a link index in your CHANGELOG, you have to set a env variable. Add it in your .env or set it global:
 
-  CHANGELOG_UNRELEASED_LINK=https://github.com/mogic-le/changelog-helper/compare/main...develop
+    CHANGELOG_UNRELEASED_LINK=https://github.com/mogic-le/changelog-helper/compare/develop...main
 
 ### Usage of commands
 
@@ -30,23 +30,23 @@ To get a link index in your CHANGELOG, you have to set a env variable:
 
 You can run a one-liner using the `changelog:add` command:
 
-  changelog-helper changelog:add [added,changed,deprecated,fixed,...] This is a new entry line
+    changelog-helper changelog:add [added,changed,deprecated,fixed,...] This is a new entry line
 
 You can use the same command in a interactive mode:
 
-  changelog-helper changelog:add
+    changelog-helper changelog:add
 
 #### Add entry based on commits
 
 You can use the same command in a interactive mode:
 
-  changelog-helper changelog:add-commit
+    changelog-helper changelog:add-commit
 
 #### Add new release
 
 You can use the same command in a interactive mode:
 
-  changelog-helper changelog:release
+    changelog-helper changelog:release
 
 
 ## License
