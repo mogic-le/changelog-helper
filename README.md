@@ -22,7 +22,7 @@ Via Composer
 
 To get a link index in your CHANGELOG, you have to set a env variable:
 
-  CHANGELOG_UNRELEASED_LINK=https://github.com/mogic-le/changelog-helper/compare/develop...master
+  CHANGELOG_UNRELEASED_LINK=https://github.com/mogic-le/changelog-helper/compare/main...develop
 
 ### Usage of commands
 
