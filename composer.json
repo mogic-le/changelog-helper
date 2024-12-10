@@ -1,0 +1,52 @@
+{
+    "name": "mogic/changelog-helper",
+    "description": "A laravel zero application to maintain your CHANGELOG file based on keepachangelog.org",
+    "keywords": ["mogic", "console", "cli"],
+    "homepage": "https://www.mogic.com",
+    "type": "project",
+    "license": "MIT",
+    "support": {
+        "issues": "https://github.com/mogic-le/changelog-helper/issues",
+        "source": "https://github.com/mogic-le/changelog-helper"
+    },
+    "authors": [
+        {
+            "name": "Stefan Berger",
+            "email": "berger@mogic.com"
+        }
+    ],
+    "require": {
+        "php": "^8.2.0"
+    },
+    "require-dev": {
+        "laravel-zero/framework": "^11.0.2",
+        "phlak/semver": "^6.0",
+        "spatie/laravel-package-tools": "^1.17",
+        "laravel/pint": "^1.18.1",
+        "mockery/mockery": "^1.6.12",
+        "pestphp/pest": "^3.5.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "optimize-autoloader": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "bin": ["builds/changelog-helper"]
+}
