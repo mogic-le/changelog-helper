@@ -4,6 +4,10 @@ All notable changes to the changelog-helper will be documented in this file.
 
 ## [unreleased]
 
+### Added
+
+- Release build
+
 ## [0.9.2] - 2024-12-10
 
 ### Fixed
