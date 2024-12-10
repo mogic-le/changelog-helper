@@ -1,6 +1,6 @@
 {
     "name": "mogic/changelog-helper",
-    "description": "A laravel zero application to maintain your CHANGELOG file based on keepachangelog.org",
+    "description": "A laravel zero application to maintain your CHANGELOG file based on keepachangelog.com",
     "keywords": ["mogic", "console", "cli"],
     "homepage": "https://www.mogic.com",
     "type": "project",

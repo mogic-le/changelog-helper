@@ -20,6 +20,10 @@ Via Composer
 
   composer global require mogic/changelog-helper
 
+To get a link index in your CHANGELOG, you have to set a env variable:
+
+  CHANGELOG_UNRELEASED_LINK=https://github.com/mogic-le/changelog-helper/compare/develop...master
+
 ### Usage of commands
 
 #### Add entry
