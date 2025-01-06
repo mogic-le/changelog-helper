@@ -1,5 +1,8 @@
 <?php
 
+use App\Commands\InspireCommand;
+
 it('inspires artisans', function () {
-    $this->artisan('inspire')->assertExitCode(0);
+    $this->artisan(InspireCommand::class)
+        ->assertExitCode(0);
 });

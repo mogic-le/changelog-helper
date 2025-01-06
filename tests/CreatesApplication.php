@@ -16,6 +16,8 @@ trait CreatesApplication
 
         $app->make(Kernel::class)->bootstrap();
 
+        \Laravel\Prompts\Prompt::fallbackWhen(true);
+
         return $app;
     }
 }

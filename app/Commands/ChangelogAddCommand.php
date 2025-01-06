@@ -6,37 +6,26 @@ use App\Enums\ChangelogType;
 use App\Lib\ChangelogHelper;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Console\PromptsForMissingInput;
-
-use function Laravel\Prompts\select;
+use Illuminate\Support\Str;
 
 class ChangelogAddCommand extends Command implements PromptsForMissingInput
 {
-    public $signature = 'add {type : The log type} {description* : The description of the changes}';
+    public $signature = 'add';
 
     public $description = 'Add a new changelog entry to the changelog file';
 
-    protected function promptForMissingArgumentsUsing(): array
-    {
-        return [
-            'type' => fn () => select(
-                label: 'Select a changelog type:',
-                options: ChangelogType::toArray(),
-                default: ChangelogType::ADDED->value,
-            ),
-            'description' => ['Please enter a description:', ''],
-        ];
-    }
-
     public function handle(): int
     {
-        $type = ucfirst($this->argument('type'));
-        $description = implode(' ', $this->argument('description', []));
+        $type = $this->choice('Select a changelog type:', ChangelogType::toArray());
+
+        $description = $this->ask('Please enter a description:', '');
+
         if (! in_array($type, ChangelogType::toArray())) {
             $this->error('Invalid type. Options are: '.implode(', ', ChangelogType::toArray()));
 
             return self::FAILURE;
         }
-        if (empty($description)) {
+        if (empty(Str::replace(' ', '', $description))) {
             $this->error('Description is required');
 
             return self::FAILURE;

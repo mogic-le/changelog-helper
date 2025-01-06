@@ -19,12 +19,12 @@ class ChangelogReleaseCommand extends Command implements PromptsForMissingInput
     protected function promptForMissingArgumentsUsing(): array
     {
         return [
-            'level' => fn () => select(
+            'level' => fn() => select(
                 label: 'Select a changelog type:',
                 options: ChangelogReleaseLevel::toArray(),
                 default: ChangelogReleaseLevel::MINOR->value,
             ),
-            'tag' => fn () => confirm(
+            'tag'   => fn() => confirm(
                 label: 'Commit and create a tag?',
                 default: false
             ),
@@ -39,7 +39,7 @@ class ChangelogReleaseCommand extends Command implements PromptsForMissingInput
         $level = $this->argument('level');
         $tag = $this->argument('tag');
 
-        $this->info('Latest version: '.$latestVersion);
+        $this->info('Latest version: ' . $latestVersion);
 
         $version = semver($latestVersion);
         switch ($level) {
@@ -53,15 +53,15 @@ class ChangelogReleaseCommand extends Command implements PromptsForMissingInput
                 $version->incrementPatch();
                 break;
         }
-        $this->info('New version: '.$version);
+        $this->info('New version: ' . $version);
 
         ChangeLogHelper::release($version->major, $version->minor, $version->patch);
 
         $this->comment('New version released successfully');
 
         if ($tag) {
-            exec('git add CHANGELOG.md && git commit -m "'.str_replace('{version}', config('changelog.version_prefix').$version, config('changelog.release_message')).'"');
-            exec('git tag '.config('changelog.version_prefix').$version);
+            exec('git add CHANGELOG.md && git commit -m "' . str_replace('{version}', config('changelog.version_prefix') . $version, config('changelog.release_message')) . '"');
+            exec('git tag ' . config('changelog.version_prefix') . $version);
             $this->comment('Tag created successfully');
         }
 

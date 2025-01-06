@@ -14,13 +14,12 @@ class ChangelogHelper
 
     public static function path(): string
     {
-        $path = getcwd();
+        $path = implode('/', [
+            config('changelog.path', base_path()),
+            config('changelog.filename')
+        ]);
 
-        if (! is_file($path)) {
-            $addFileName = true;
-        }
-
-        return $path.($addFileName ? '/CHANGELOG.md' : '');
+        return $path;
     }
 
     /**
@@ -28,7 +27,7 @@ class ChangelogHelper
      */
     public static function template(): string
     {
-        return base_path('Templates/CHANGELOG.md');
+        return File::get(base_path(config('changelog.template')));
     }
 
     /**
@@ -36,11 +35,12 @@ class ChangelogHelper
      */
     public static function prepare(): bool
     {
-
         $path = self::path();
 
-        if (File::exists($path) === false || File::get($path) === '') {
+        if (!File::exists($path) || File::get($path) === '') {
+
             $content = str_replace('{{package_name}}', config('changelog.package_name'), self::template());
+
             File::put($path, $content);
         }
 
@@ -72,7 +72,6 @@ class ChangelogHelper
         }
 
         return collect($releases)->sortDesc(SORT_NATURAL)->first();
-
     }
 
     /**
@@ -83,9 +82,8 @@ class ChangelogHelper
      */
     public static function addLine(string $type, string $text): bool
     {
-
         $success = false;
-        $path = self::path(true);
+        $path = self::path();
 
         $fileExists = File::exists($path);
 
@@ -148,11 +146,11 @@ class ChangelogHelper
                 if ($max > $i) {
                     $link = str_replace($linkMeta['develop_branch'], $versionPrefix.$links[$i], $link);
                 } else {
-                    $link = str_replace($linkMeta['develop_branch'], $versionPrefix.$links[$i - 1], $link);
+                    $link = str_replace($linkMeta['develop_branch'], $versionPrefix.$links[$i-1], $link);
                 }
             }
 
-            $finalLinks[] = "[${release}]: ${link}";
+            $finalLinks[] = "[{$release}]: {$link}";
         }
 
         return $finalLinks;
@@ -178,18 +176,18 @@ class ChangelogHelper
 
         foreach ($content as $release => $area) {
 
-            $lines[] = "${release}\n\n";
+            $lines[] = "{$release}\n\n";
             if (($rel = self::getRelease($release)) != null) {
                 $links[] = $rel;
             }
 
             foreach ($area as $type => $areaLines) {
 
-                $lines[] = "### ${type}\n\n";
+                $lines[] = "### {$type}\n\n";
 
                 foreach ($areaLines as $index => $line) {
                     if ($line != '') {
-                        $lines[] = in_array("- ${line}", $lines) === false ? "- ${line}\n" : "\n";
+                        $lines[] = in_array("- {$line}", $lines) === false ? "- {$line}\n" : "\n";
                     }
                 }
 
@@ -212,9 +210,9 @@ class ChangelogHelper
         $finalContent = $prefixContent.$content;
 
         // Save the markdown file
-        File::put(self::path(), $finalContent);
+        File::put($path, $finalContent);
 
-        if (! File::exists(self::path())) {
+        if (! File::exists($path)) {
             return false;
         }
 
@@ -223,11 +221,10 @@ class ChangelogHelper
     }
 
     /**
-     * Convert a CHANGELOG file into an field
+     * Convert a CHANGELOG file into a field
      */
     public static function parse(): array
     {
-
         $path = self::path();
 
         $content = [
@@ -280,7 +277,7 @@ class ChangelogHelper
                 $stop = isset($types[0][$typeIndex + 1]) ? strripos($part, $types[0][$typeIndex + 1]) : strlen($part);
                 $typeSimple = substr($type, 4);
 
-                $partType = trim(str_replace("${type}", '', substr($part, $start, $stop - $start)));
+                $partType = trim(str_replace("{$type}", '', substr($part, $start, $stop - $start)));
 
                 $typeEntries = implode('', array_map(function ($item) {
                     if (Str::startsWith($item, '-') === true) {
@@ -336,11 +333,11 @@ class ChangelogHelper
         $content = self::parse();
         $date = Carbon::now()->format('Y-m-d');
 
-        if (empty($content["## [${major}.${minor}.${patch}] - ${date}"])) {
-            $content["## [${major}.${minor}.${patch}] - ${date}"] = $content[self::$identifierUnreleasedHeading];
+        if (empty($content["## [{$major}.{$minor}.{$patch}] - {$date}"])) {
+            $content["## [{$major}.{$minor}.{$patch}] - {$date}"] = $content[self::$identifierUnreleasedHeading];
             $content[self::$identifierUnreleasedHeading] = [];
         } else {
-            $content["## [${major}.${minor}.${patch}] - ${date}"] = array_merge($content["## [${major}.${minor}.${patch}] - ${date}"], $content[self::$identifierUnreleasedHeading]);
+            $content["## [{$major}.{$minor}.{$patch}] - {$date}"] = array_merge($content["## [{$major}.{$minor}.{$patch}] - {$date}"], $content[self::$identifierUnreleasedHeading]);
             $content[self::$identifierUnreleasedHeading] = [];
         }
 
