@@ -63,3 +63,7 @@ Or you can use the same command in a interactive mode:
 ## License
 
 Changelog-Helper is an open-source software licensed under the MIT license.
+
+## Tests
+
+run `./vendor/bin/pest`
