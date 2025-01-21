@@ -67,7 +67,9 @@ To build a new release version, we have to create the build with the release tag
     ./changelog-helper app:build changelog-helper --build-version=1.x.x
     git add ./builds/changelog-helper
     ./changelog-helper add added Added new release build
-    ./changelog-helper release Release version 1.x.x
+    git add ./builds/changelog-helper
+    git add ./CHANGELOG.md
+    ./changelog-helper release minor 1.x.x
     git push && git git push --tags
 
 
