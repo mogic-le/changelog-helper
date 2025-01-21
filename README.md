@@ -1,5 +1,9 @@
 # Changelog-Helper
 
+Changelog-Helper is a set of commandline utilities for adding and releasing new CHANGELOG.md entries as defined by [keepachangelog.com](https://keepachangelog.com) definition.
+
+It helps with the creation of correct entries, version numbers, tags and the table of contents.
+
 <p align="center">
   <a href="https://github.com/mogic-le/changelog-helper/actions/workflows/static.yml"><img src="https://github.com/mogic-le/changelog-helper/actions/workflows/static.yml/badge.svg" alt="Static Analysis" /></a>
   <a href="https://github.com/mogic-le/changelog-helper/actions/workflows/pest-tests.yml"><img src="https://github.com/mogic-le/changelog-helper/actions/workflows/pest-tests.yml/badge.svg" alt="Tests" /></a>
@@ -7,13 +11,11 @@
   <a href="https://packagist.org/packages/mogic/changelog-helper"><img src="https://img.shields.io/packagist/v/mogic/changelog-helper.svg?label=stable" alt="Latest Stable Version" /></a>
 </p>
 
-Changelog-Helper was created by [Stefan Berger](https://github.com/mogic-le) from [MOGIC](https://www.mogic.com), and is a set of commandline commands to add new CHANGELOG entries and create new releases.
-
-- Built on top of the [Laravel Zero](https://laravel-zero.com) components.
-
 ------
 
 ## Documentation
+
+The helper is built on top of the [Laravel Zero](https://laravel-zero.com) components and uses git as an internal command.
 
 ### Install
 
@@ -73,6 +75,9 @@ To build a new release version, we have to create the build with the release tag
     ./changelog-helper release minor 1.x.x
     git push && git git push --tags
 
+## Author
+
+Changelog-Helper was created by [Stefan Berger](https://github.com/mogic-le) from [MOGIC](https://www.mogic.com).
 
 ## License
 

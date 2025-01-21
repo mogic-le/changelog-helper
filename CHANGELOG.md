@@ -4,6 +4,10 @@ All notable changes to the changelog-helper will be documented in this file.
 
 ## [unreleased]
 
+### Changed
+
+- Docs for better release emails
+
 ## [1.0.2] - 2025-01-21
 
 ### Fixed
