@@ -7,10 +7,12 @@ All notable changes to the changelog-helper will be documented in this file.
 ### Added
 
 - Run tests in github actions
+- Build documentation
 
 ### Changed
 
 - Packages updated
+- Revert command arguments
 
 ### Fixed
 

@@ -60,6 +60,17 @@ Or you can use the same command in a interactive mode:
 
 * CHANGELOG_RELEASE_MESSAGE
 
+## Build & release new version
+
+To build a new release version, we have to create the build with the release tag to create after.
+
+    ./changelog-helper app:build changelog-helper --build-version=1.x.x
+    git add ./builds/changelog-helper
+    ./changelog-helper add added Added new release build
+    ./changelog-helper release Release version 1.x.x
+    git push && git git push --tags
+
+
 ## License
 
 Changelog-Helper is an open-source software licensed under the MIT license.
