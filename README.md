@@ -1,9 +1,10 @@
 # Changelog-Helper
 
 <p align="center">
-  <a href="https://github.com/mogic-le/changelog-helper/actions"><img src="https://github.com/mogic-le/changelog-helper/actions/workflows/static.yml/badge.svg" alt="Static Analysis" /></a>
-  <a href="https://packagist.org/packages/mogic-le/changelog-helper"><img src="https://img.shields.io/packagist/dt/mogic-le/changelog-helper.svg" alt="Total Downloads" /></a>
-  <a href="https://packagist.org/packages/mogic-le/changelog-helper"><img src="https://img.shields.io/packagist/v/mogic-le/changelog-helper.svg?label=stable" alt="Latest Stable Version" /></a>
+  <a href="https://github.com/mogic-le/changelog-helper/actions/workflows/static.yml"><img src="https://github.com/mogic-le/changelog-helper/actions/workflows/static.yml/badge.svg" alt="Static Analysis" /></a>
+  <a href="https://github.com/mogic-le/changelog-helper/actions/workflows/pest-tests.yml"><img src="https://github.com/mogic-le/changelog-helper/actions/workflows/pest-tests.yml/badge.svg" alt="Tests" /></a>
+  <a href="https://packagist.org/packages/mogic/changelog-helper"><img src="https://img.shields.io/packagist/dt/mogic/changelog-helper.svg" alt="Total Downloads" /></a>
+  <a href="https://packagist.org/packages/mogic/changelog-helper"><img src="https://img.shields.io/packagist/v/mogic/changelog-helper.svg?label=stable" alt="Latest Stable Version" /></a>
 </p>
 
 Changelog-Helper was created by [Stefan Berger](https://github.com/mogic-le) from [MOGIC](https://www.mogic.com), and is a set of commandline commands to add new CHANGELOG entries and create new releases.
