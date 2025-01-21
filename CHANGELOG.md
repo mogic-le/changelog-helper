@@ -4,6 +4,10 @@ All notable changes to the changelog-helper will be documented in this file.
 
 ## [unreleased]
 
+### Added
+
+- Run tests in github actions
+
 ### Changed
 
 - Packages updated
