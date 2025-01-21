@@ -6,6 +6,10 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
+beforeEach(function () {
+    File::ensureDirectoryExists(base_path('storage/app/test', 0755, true));
+});
+
 describe('add to changelog', function () {
 
     $filename = Str::random(20).'.md';
@@ -76,4 +80,8 @@ describe('add to changelog', function () {
 
         Storage::delete($files);
     });
+});
+
+afterAll(function () {
+    File::deleteDirectory(base_path('storage/app/test'));
 });

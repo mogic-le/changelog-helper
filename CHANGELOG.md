@@ -11,6 +11,7 @@ All notable changes to the changelog-helper will be documented in this file.
 ### Fixed
 
 - Code style fixed
+- Test folder is created and removed in tests
 
 ## [0.9.6] - 2024-12-10
 
