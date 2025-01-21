@@ -8,7 +8,6 @@ use App\Lib\GitHelper;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Console\PromptsForMissingInput;
 
-use function Laravel\Prompts\multiselect;
 use function Laravel\Prompts\textarea;
 
 class ChangelogAddCommitCommand extends Command implements PromptsForMissingInput
@@ -21,7 +20,7 @@ class ChangelogAddCommitCommand extends Command implements PromptsForMissingInpu
     {
         $type = $this->choice('Select a changelog type:', ChangelogType::toArray());
 
-        $commits = (new GitHelper())->getCommits();
+        $commits = (new GitHelper)->getCommits();
 
         $selectedCommits = $this->choice('Please select the commits:', $commits, 0, 1, true);
 

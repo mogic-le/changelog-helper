@@ -16,7 +16,7 @@ class ChangelogHelper
     {
         $path = implode('/', [
             config('changelog.path', base_path()),
-            config('changelog.filename')
+            config('changelog.filename'),
         ]);
 
         return $path;
@@ -37,7 +37,7 @@ class ChangelogHelper
     {
         $path = self::path();
 
-        if (!File::exists($path) || File::get($path) === '') {
+        if (! File::exists($path) || File::get($path) === '') {
 
             $content = str_replace('{{package_name}}', config('changelog.package_name'), self::template());
 
@@ -146,7 +146,7 @@ class ChangelogHelper
                 if ($max > $i) {
                     $link = str_replace($linkMeta['develop_branch'], $versionPrefix.$links[$i], $link);
                 } else {
-                    $link = str_replace($linkMeta['develop_branch'], $versionPrefix.$links[$i-1], $link);
+                    $link = str_replace($linkMeta['develop_branch'], $versionPrefix.$links[$i - 1], $link);
                 }
             }
 
