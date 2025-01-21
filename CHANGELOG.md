@@ -4,6 +4,8 @@ All notable changes to the changelog-helper will be documented in this file.
 
 ## [unreleased]
 
+## [1.0.2] - 2025-01-21
+
 ### Fixed
 
 - Github docs icons
@@ -196,6 +198,7 @@ All notable changes to the changelog-helper will be documented in this file.
 - Initial commands for adding and releasing
 
 [unreleased]: https://github.com/mogic-le/changelog-helper/compare/develop...main
+[1.0.2]: https://github.com/mogic-le/changelog-helper/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/mogic-le/changelog-helper/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/mogic-le/changelog-helper/compare/v0.9.6...v1.0.0
 [0.9.6]: https://github.com/mogic-le/changelog-helper/compare/v0.9.5...v0.9.6
