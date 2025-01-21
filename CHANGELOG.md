@@ -4,6 +4,10 @@ All notable changes to the changelog-helper will be documented in this file.
 
 ## [unreleased]
 
+### Fixed
+
+- Github docs icons
+
 ## [1.0.0] - 2025-01-21
 
 ### Added
