@@ -82,6 +82,10 @@ class ChangelogHelper
      */
     public static function addLine(string $type, string $text): bool
     {
+        if (empty($text)) {
+            return true; // Skip empty lines
+        }
+
         $success = false;
         $path = self::path();
 
@@ -105,7 +109,8 @@ class ChangelogHelper
             $content[self::$identifierUnreleasedHeading][ucfirst($type)] = [];
         }
 
-        if (! in_array($text, $content[self::$identifierUnreleasedHeading][ucfirst($type)])) {
+        // Only add if not already present
+        if (!in_array($text, $content[self::$identifierUnreleasedHeading][ucfirst($type)])) {
             $content[self::$identifierUnreleasedHeading][ucfirst($type)][] = $text;
         }
 
@@ -168,35 +173,33 @@ class ChangelogHelper
      */
     public static function toMarkdown(array $content = []): bool
     {
-
         $content = self::sortContent($content);
 
         $lines = [];
         $links = [];
 
         foreach ($content as $release => $area) {
-
             $lines[] = "{$release}\n\n";
             if (($rel = self::getRelease($release)) != null) {
                 $links[] = $rel;
             }
 
             foreach ($area as $type => $areaLines) {
-
                 $lines[] = "### {$type}\n\n";
 
-                foreach ($areaLines as $index => $line) {
-                    if ($line != '') {
-                        $lines[] = in_array("- {$line}", $lines) === false ? "- {$line}\n" : "\n";
-                    }
+                // Filter out empty lines and ensure uniqueness
+                $uniqueLines = array_filter(array_unique($areaLines), function($line) {
+                    return !empty(trim($line));
+                });
+
+                foreach ($uniqueLines as $line) {
+                    $lines[] = "- {$line}\n";
                 }
 
-                $lines[] = $lines[count($lines) - 1] != "\n" ? "\n" : '';
+                $lines[] = "\n";
             }
-
-            $lines[] = '';
-
         }
+
         $content = implode('', $lines);
 
         if (count($links)) {
@@ -212,12 +215,7 @@ class ChangelogHelper
         // Save the markdown file
         File::put($path, $finalContent);
 
-        if (! File::exists($path)) {
-            return false;
-        }
-
-        return true;
-
+        return File::exists($path);
     }
 
     /**

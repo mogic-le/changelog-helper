@@ -77,7 +77,7 @@ To build a new release version, we have to create the build with the release tag
 
 ## Author
 
-Changelog-Helper was created by [Stefan Berger](https://github.com/mogic-le) from [MOGIC](https://www.mogic.com).
+Changelog-Helper was created by [Stefan Berger](https://github.com/bergo) from [MOGIC](https://www.mogic.com).
 
 ## License
 
