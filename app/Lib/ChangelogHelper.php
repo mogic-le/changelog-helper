@@ -110,7 +110,7 @@ class ChangelogHelper
         }
 
         // Only add if not already present
-        if (!in_array($text, $content[self::$identifierUnreleasedHeading][ucfirst($type)])) {
+        if (! in_array($text, $content[self::$identifierUnreleasedHeading][ucfirst($type)])) {
             $content[self::$identifierUnreleasedHeading][ucfirst($type)][] = $text;
         }
 
@@ -188,8 +188,8 @@ class ChangelogHelper
                 $lines[] = "### {$type}\n\n";
 
                 // Filter out empty lines and ensure uniqueness
-                $uniqueLines = array_filter(array_unique($areaLines), function($line) {
-                    return !empty(trim($line));
+                $uniqueLines = array_filter(array_unique($areaLines), function ($line) {
+                    return ! empty(trim($line));
                 });
 
                 foreach ($uniqueLines as $line) {

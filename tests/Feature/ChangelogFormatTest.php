@@ -20,7 +20,7 @@ describe('changelog formatting', function () {
         // Add the same entry multiple times
         ChangelogHelper::addLine('added', 'Test feature');
         ChangelogHelper::addLine('added', 'Test feature');
-        ChangelogHelper::addLine('added',  'Test feature');
+        ChangelogHelper::addLine('added', 'Test feature');
 
         $content = ChangelogHelper::parse();
 
@@ -39,13 +39,13 @@ describe('changelog formatting', function () {
         $content = File::get($path);
 
         // Check for proper section headers and content
-        $this->assertStringContainsString("### Added", $content);
-        $this->assertStringContainsString("- New feature", $content);
-        $this->assertStringContainsString("### Fixed", $content);
-        $this->assertStringContainsString("- Bug fix", $content);
+        $this->assertStringContainsString('### Added', $content);
+        $this->assertStringContainsString('- New feature', $content);
+        $this->assertStringContainsString('### Fixed', $content);
+        $this->assertStringContainsString('- Bug fix', $content);
 
         // Make sure sections are properly separated
-        $this->assertFalse(strpos($content, "- New feature### Fixed") !== false);
+        $this->assertFalse(strpos($content, '- New feature### Fixed') !== false);
     });
 
     it('sorts sections alphabetically', function () {
