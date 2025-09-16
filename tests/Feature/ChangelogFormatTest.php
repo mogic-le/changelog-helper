@@ -270,7 +270,100 @@ All notable changes to test-project will be documented in this file.
         // Should return the highest version number regardless of date format
         $this->assertEquals('3.0.0', $latestVersion);
     });
+
+    it('finds changelog in parent directories up to git root', function () {
+        // Create a temporary directory structure with a git repo
+        $tempDir = sys_get_temp_dir() . '/changelog_test_' . uniqid();
+        $subDir = $tempDir . '/subdir/nested';
+
+        // Create directory structure
+        mkdir($subDir, 0755, true);
+
+        // Create a .git directory in the root
+        mkdir($tempDir . '/.git', 0755, true);
+
+        // Create a CHANGELOG.md in the root
+        $rootChangelog = $tempDir . '/CHANGELOG.md';
+        file_put_contents($rootChangelog, "# Changelog\n\n## [unreleased]\n\n- Root changelog\n");
+
+        // Change to subdirectory and temporarily override config
+        $originalCwd = getcwd();
+        $originalFilename = config('changelog.filename');
+
+        chdir($subDir);
+        config()->set('changelog.filename', 'CHANGELOG.md');
+
+        try {
+            // The path method should find the root changelog, not create a new one in subdir
+            $foundPath = ChangelogHelper::findChangelogPath();
+
+            $this->assertEquals(realpath($rootChangelog), realpath($foundPath));
+            $this->assertTrue(file_exists($rootChangelog));
+            $this->assertFalse(file_exists($subDir . '/CHANGELOG.md'));
+
+        } finally {
+            // Restore original directory and config
+            chdir($originalCwd);
+            config()->set('changelog.filename', $originalFilename);
+
+            // Clean up
+            deleteDirectory($tempDir);
+        }
+    });
+
+    it('falls back to config path when no git root found', function () {
+        // Create a temporary directory structure WITHOUT a git repo
+        $tempDir = sys_get_temp_dir() . '/changelog_test_no_git_' . uniqid();
+        $subDir = $tempDir . '/subdir/nested';
+
+        // Create directory structure (no .git directory)
+        mkdir($subDir, 0755, true);
+
+        // Change to subdirectory and temporarily override config
+        $originalCwd = getcwd();
+        $originalFilename = config('changelog.filename');
+        $originalPath = config('changelog.path');
+
+        chdir($subDir);
+        config()->set('changelog.filename', 'CHANGELOG.md');
+        config()->set('changelog.path', $tempDir);
+
+        try {
+            // Should fall back to config path since no git root found
+            $foundPath = ChangelogHelper::findChangelogPath();
+            $expectedPath = $tempDir . '/CHANGELOG.md';
+
+            $this->assertEquals($expectedPath, $foundPath);
+
+        } finally {
+            // Restore original directory and config
+            chdir($originalCwd);
+            config()->set('changelog.filename', $originalFilename);
+            config()->set('changelog.path', $originalPath);
+
+            // Clean up
+            deleteDirectory($tempDir);
+        }
+    });
 });
+
+// Helper function to recursively delete directories
+function deleteDirectory($dir) {
+    if (!is_dir($dir)) {
+        return;
+    }
+
+    $files = array_diff(scandir($dir), ['.', '..']);
+    foreach ($files as $file) {
+        $path = $dir . '/' . $file;
+        if (is_dir($path)) {
+            deleteDirectory($path);
+        } else {
+            unlink($path);
+        }
+    }
+    rmdir($dir);
+}
 
 afterAll(function () {
     File::deleteDirectory(base_path('storage/app/test'));

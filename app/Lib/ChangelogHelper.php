@@ -14,9 +14,48 @@ class ChangelogHelper
 
     public static function path(): string
     {
+        return self::findChangelogPath();
+    }
+
+    /**
+     * Find the changelog file by scanning parent directories up to the git root
+     */
+    public static function findChangelogPath(): string
+    {
+        $filename = config('changelog.filename', 'CHANGELOG.md');
+        $currentDir = getcwd();
+
+        // Start from current directory and walk up
+        $searchDir = $currentDir;
+
+        while (true) {
+            // Check if CHANGELOG.md exists in current directory
+            $changelogPath = $searchDir . '/' . $filename;
+            if (file_exists($changelogPath)) {
+                return $changelogPath;
+            }
+
+            // Check if we've reached the git root
+            if (is_dir($searchDir . '/.git')) {
+                // We found the git root, use this directory for the changelog
+                return $searchDir . '/' . $filename;
+            }
+
+            // Get parent directory
+            $parentDir = dirname($searchDir);
+
+            // If we can't go up anymore (reached filesystem root), break
+            if ($parentDir === $searchDir) {
+                break;
+            }
+
+            $searchDir = $parentDir;
+        }
+
+        // Fallback to the original behavior if no git root found
         $path = implode('/', [
             config('changelog.path', base_path()),
-            config('changelog.filename'),
+            $filename,
         ]);
 
         return $path;

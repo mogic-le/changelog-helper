@@ -11,6 +11,7 @@ All notable changes to the changelog-helper will be documented in this file.
 ### Fixed
 
 - Versions without dates are now properly parsed
+- Tool now scans parent directories for existing CHANGELOG.md instead of creating new files in subdirectories
 
 ## [1.1.0] - 2025-05-06
 
