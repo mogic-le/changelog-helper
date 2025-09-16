@@ -230,7 +230,7 @@ class ChangelogHelper
         ];
         $contentFile = File::exists($path) ? File::get($path) : '';
 
-        preg_match_all("/##\s{0,}\[unreleased\]|\#\#\s{0,}\[\d{1,}\.\d{1,}\.\d{1,}\]\s\-\s\d{4}\-\d{2}-\d{2}/", $contentFile, $result);
+        preg_match_all("/##\s{0,}\[unreleased\]|\#\#\s{0,}\[\d{1,}\.\d{1,}\.\d{1,}\](\s\-\s\d{4}\-\d{2}-\d{2})?/", $contentFile, $result);
 
         $releases = $result[0];
 

@@ -185,6 +185,91 @@ All notable changes to Changelog-Helper will be documented in this file.
         $this->assertContains('Normal bullet point', $content[$releaseKey]['Changed']);
         $this->assertContains('Mixed with proper category', $content[$releaseKey]['Changed']);
     });
+
+    it('handles versions without dates', function () {
+        // Create a changelog with versions that have no dates
+        $path = ChangelogHelper::path();
+        $changelogWithoutDates = "# Changelog
+
+All notable changes to test-project will be documented in this file.
+
+## [unreleased]
+
+- Unreleased feature
+
+## [2.0.0]
+
+### Added
+
+- New feature without date
+
+## [1.5.0] - 2024-01-15
+
+### Fixed
+
+- Bug fix with date
+
+## [1.0.0]
+
+- Another version without date
+
+";
+        File::put($path, $changelogWithoutDates);
+
+        $content = ChangelogHelper::parse();
+
+        // Check that versions without dates are still parsed
+        $this->assertArrayHasKey('## [2.0.0]', $content);
+        $this->assertArrayHasKey('Added', $content['## [2.0.0]']);
+        $this->assertContains('New feature without date', $content['## [2.0.0]']['Added']);
+
+        $this->assertArrayHasKey('## [1.0.0]', $content);
+        $this->assertArrayHasKey('Changed', $content['## [1.0.0]']);
+        $this->assertContains('Another version without date', $content['## [1.0.0]']['Changed']);
+
+        // Check that versions with dates still work
+        $this->assertArrayHasKey('## [1.5.0] - 2024-01-15', $content);
+        $this->assertArrayHasKey('Fixed', $content['## [1.5.0] - 2024-01-15']);
+        $this->assertContains('Bug fix with date', $content['## [1.5.0] - 2024-01-15']['Fixed']);
+    });
+
+    it('getLatestVersion works with versions without dates', function () {
+        // Create a changelog with mixed version formats
+        $path = ChangelogHelper::path();
+        $mixedVersions = "# Changelog
+
+All notable changes to test-project will be documented in this file.
+
+## [unreleased]
+
+- Unreleased feature
+
+## [3.0.0]
+
+### Added
+
+- Latest version without date
+
+## [2.5.0] - 2024-02-01
+
+### Fixed
+
+- Version with date
+
+## [2.0.0]
+
+### Changed
+
+- Older version without date
+
+";
+        File::put($path, $mixedVersions);
+
+        $latestVersion = ChangelogHelper::getLatestVersion();
+
+        // Should return the highest version number regardless of date format
+        $this->assertEquals('3.0.0', $latestVersion);
+    });
 });
 
 afterAll(function () {
