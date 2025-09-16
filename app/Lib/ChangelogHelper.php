@@ -264,8 +264,47 @@ class ChangelogHelper
 
             $typesList = [];
 
+            // First, handle any bullet points that appear before the first subheader
+            // These should be assigned to "Changed" category
+            if (!empty($types[0])) {
+                $firstSubheaderPos = strpos($part, $types[0][0]);
+                $beforeFirstSubheader = substr($part, 0, $firstSubheaderPos);
+
+                $unassignedBulletPoints = [];
+                $lines = explode("\n", $beforeFirstSubheader);
+
+                foreach ($lines as $line) {
+                    $trimmedLine = trim($line);
+                    if (Str::startsWith($trimmedLine, '-') && !empty(trim(substr($trimmedLine, 1)))) {
+                        $unassignedBulletPoints[] = trim(substr($trimmedLine, 1));
+                    }
+                }
+
+                if (!empty($unassignedBulletPoints)) {
+                    if (!isset($content[$release]['Changed'])) {
+                        $content[$release]['Changed'] = [];
+                    }
+                    $content[$release]['Changed'] = array_merge($content[$release]['Changed'], $unassignedBulletPoints);
+                }
+            }
+
             // Extract from the file
             if (empty($types[0])) {
+                // No subheaders found, but there might be bullet points
+                // Assign all bullet points to "Changed" category
+                $bulletPoints = [];
+                $lines = explode("\n", $part);
+
+                foreach ($lines as $line) {
+                    $line = trim($line);
+                    if (Str::startsWith($line, '-') && !empty(trim(substr($line, 1)))) {
+                        $bulletPoints[] = trim(substr($line, 1));
+                    }
+                }
+
+                if (!empty($bulletPoints)) {
+                    $content[$release]['Changed'] = $bulletPoints;
+                }
                 continue;
             }
 
@@ -311,7 +350,12 @@ class ChangelogHelper
                     return trim($item);
                 })->toArray();
 
-                $content[$release][$typeSimple] = $entries;
+                // Merge with existing entries instead of overwriting
+                if (isset($content[$release][$typeSimple]) && is_array($content[$release][$typeSimple])) {
+                    $content[$release][$typeSimple] = array_merge($content[$release][$typeSimple], $entries);
+                } else {
+                    $content[$release][$typeSimple] = $entries;
+                }
 
             });
         }

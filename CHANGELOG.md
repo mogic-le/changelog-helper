@@ -4,6 +4,10 @@ All notable changes to the changelog-helper will be documented in this file.
 
 ## [unreleased]
 
+### Changed
+
+- Add default category "Changed" for bullet points before first subheader
+
 ## [1.1.0] - 2025-05-06
 
 ### Added

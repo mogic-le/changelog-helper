@@ -94,6 +94,97 @@ describe('changelog formatting', function () {
         $this->assertContains('First bug fix', $content[ChangelogHelper::$identifierUnreleasedHeading]['Fixed']);
         $this->assertContains('Second bug fix', $content[ChangelogHelper::$identifierUnreleasedHeading]['Fixed']);
     });
+
+    it('handles changelog with missing subheaders and assigns unassigned bullet points to Changed', function () {
+        // Create a changelog with bullet points but no subheaders
+        $path = ChangelogHelper::path();
+        $malformedChangelog = "# Changelog
+
+All notable changes to Changelog-Helper will be documented in this file.
+
+## [unreleased]
+
+- First unassigned bullet point
+- Second unassigned bullet point
+
+## [1.0.0] - 2024-01-01
+
+- Another unassigned bullet point
+- Yet another unassigned bullet point
+
+### Added
+
+- Properly categorized addition
+
+";
+        File::put($path, $malformedChangelog);
+
+        $content = ChangelogHelper::parse();
+
+        // Check that unassigned bullet points in unreleased are assigned to 'Changed'
+        $this->assertArrayHasKey('Changed', $content[ChangelogHelper::$identifierUnreleasedHeading]);
+        $this->assertContains('First unassigned bullet point', $content[ChangelogHelper::$identifierUnreleasedHeading]['Changed']);
+        $this->assertContains('Second unassigned bullet point', $content[ChangelogHelper::$identifierUnreleasedHeading]['Changed']);
+
+        // Check that the released version also has unassigned items in 'Changed'
+        $releaseKey = '## [1.0.0] - 2024-01-01';
+        $this->assertArrayHasKey($releaseKey, $content);
+        $this->assertArrayHasKey('Changed', $content[$releaseKey]);
+        $this->assertContains('Another unassigned bullet point', $content[$releaseKey]['Changed']);
+        $this->assertContains('Yet another unassigned bullet point', $content[$releaseKey]['Changed']);
+
+        // Check that properly categorized items are still in their correct category
+        $this->assertArrayHasKey('Added', $content[$releaseKey]);
+        $this->assertContains('Properly categorized addition', $content[$releaseKey]['Added']);
+    });
+
+    it('handles mixed content with empty lines and whitespace', function () {
+        // Create a changelog with various edge cases
+        $path = ChangelogHelper::path();
+        $edgeCaseChangelog = "# Changelog
+
+All notable changes to Changelog-Helper will be documented in this file.
+
+## [unreleased]
+
+- First bullet point
+
+- Second bullet point with extra spacing
+
+### Added
+
+- Properly categorized item
+
+## [2.0.0] - 2024-02-01
+
+   - Bullet with leading spaces
+- Normal bullet point
+
+### Changed
+
+- Mixed with proper category
+
+";
+        File::put($path, $edgeCaseChangelog);
+
+        $content = ChangelogHelper::parse();
+
+        // Check unreleased section
+        $this->assertArrayHasKey('Changed', $content[ChangelogHelper::$identifierUnreleasedHeading]);
+        $this->assertContains('First bullet point', $content[ChangelogHelper::$identifierUnreleasedHeading]['Changed']);
+        $this->assertContains('Second bullet point with extra spacing', $content[ChangelogHelper::$identifierUnreleasedHeading]['Changed']);
+
+        $this->assertArrayHasKey('Added', $content[ChangelogHelper::$identifierUnreleasedHeading]);
+        $this->assertContains('Properly categorized item', $content[ChangelogHelper::$identifierUnreleasedHeading]['Added']);
+
+        // Check release section
+        $releaseKey = '## [2.0.0] - 2024-02-01';
+        $this->assertArrayHasKey($releaseKey, $content);
+        $this->assertArrayHasKey('Changed', $content[$releaseKey]);
+        $this->assertContains('Bullet with leading spaces', $content[$releaseKey]['Changed']);
+        $this->assertContains('Normal bullet point', $content[$releaseKey]['Changed']);
+        $this->assertContains('Mixed with proper category', $content[$releaseKey]['Changed']);
+    });
 });
 
 afterAll(function () {
