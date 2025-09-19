@@ -30,15 +30,15 @@ class ChangelogHelper
 
         while (true) {
             // Check if CHANGELOG.md exists in current directory
-            $changelogPath = $searchDir . '/' . $filename;
+            $changelogPath = $searchDir.'/'.$filename;
             if (file_exists($changelogPath)) {
                 return $changelogPath;
             }
 
             // Check if we've reached the git root
-            if (is_dir($searchDir . '/.git')) {
+            if (is_dir($searchDir.'/.git')) {
                 // We found the git root, use this directory for the changelog
-                return $searchDir . '/' . $filename;
+                return $searchDir.'/'.$filename;
             }
 
             // Get parent directory
@@ -305,7 +305,7 @@ class ChangelogHelper
 
             // First, handle any bullet points that appear before the first subheader
             // These should be assigned to "Changed" category
-            if (!empty($types[0])) {
+            if (! empty($types[0])) {
                 $firstSubheaderPos = strpos($part, $types[0][0]);
                 $beforeFirstSubheader = substr($part, 0, $firstSubheaderPos);
 
@@ -314,13 +314,13 @@ class ChangelogHelper
 
                 foreach ($lines as $line) {
                     $trimmedLine = trim($line);
-                    if (Str::startsWith($trimmedLine, '-') && !empty(trim(substr($trimmedLine, 1)))) {
+                    if (Str::startsWith($trimmedLine, '-') && ! empty(trim(substr($trimmedLine, 1)))) {
                         $unassignedBulletPoints[] = trim(substr($trimmedLine, 1));
                     }
                 }
 
-                if (!empty($unassignedBulletPoints)) {
-                    if (!isset($content[$release]['Changed'])) {
+                if (! empty($unassignedBulletPoints)) {
+                    if (! isset($content[$release]['Changed'])) {
                         $content[$release]['Changed'] = [];
                     }
                     $content[$release]['Changed'] = array_merge($content[$release]['Changed'], $unassignedBulletPoints);
@@ -336,14 +336,15 @@ class ChangelogHelper
 
                 foreach ($lines as $line) {
                     $line = trim($line);
-                    if (Str::startsWith($line, '-') && !empty(trim(substr($line, 1)))) {
+                    if (Str::startsWith($line, '-') && ! empty(trim(substr($line, 1)))) {
                         $bulletPoints[] = trim(substr($line, 1));
                     }
                 }
 
-                if (!empty($bulletPoints)) {
+                if (! empty($bulletPoints)) {
                     $content[$release]['Changed'] = $bulletPoints;
                 }
+
                 continue;
             }
 

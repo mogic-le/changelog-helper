@@ -98,7 +98,7 @@ describe('changelog formatting', function () {
     it('handles changelog with missing subheaders and assigns unassigned bullet points to Changed', function () {
         // Create a changelog with bullet points but no subheaders
         $path = ChangelogHelper::path();
-        $malformedChangelog = "# Changelog
+        $malformedChangelog = '# Changelog
 
 All notable changes to Changelog-Helper will be documented in this file.
 
@@ -116,7 +116,7 @@ All notable changes to Changelog-Helper will be documented in this file.
 
 - Properly categorized addition
 
-";
+';
         File::put($path, $malformedChangelog);
 
         $content = ChangelogHelper::parse();
@@ -141,7 +141,7 @@ All notable changes to Changelog-Helper will be documented in this file.
     it('handles mixed content with empty lines and whitespace', function () {
         // Create a changelog with various edge cases
         $path = ChangelogHelper::path();
-        $edgeCaseChangelog = "# Changelog
+        $edgeCaseChangelog = '# Changelog
 
 All notable changes to Changelog-Helper will be documented in this file.
 
@@ -164,7 +164,7 @@ All notable changes to Changelog-Helper will be documented in this file.
 
 - Mixed with proper category
 
-";
+';
         File::put($path, $edgeCaseChangelog);
 
         $content = ChangelogHelper::parse();
@@ -189,7 +189,7 @@ All notable changes to Changelog-Helper will be documented in this file.
     it('handles versions without dates', function () {
         // Create a changelog with versions that have no dates
         $path = ChangelogHelper::path();
-        $changelogWithoutDates = "# Changelog
+        $changelogWithoutDates = '# Changelog
 
 All notable changes to test-project will be documented in this file.
 
@@ -213,7 +213,7 @@ All notable changes to test-project will be documented in this file.
 
 - Another version without date
 
-";
+';
         File::put($path, $changelogWithoutDates);
 
         $content = ChangelogHelper::parse();
@@ -236,7 +236,7 @@ All notable changes to test-project will be documented in this file.
     it('getLatestVersion works with versions without dates', function () {
         // Create a changelog with mixed version formats
         $path = ChangelogHelper::path();
-        $mixedVersions = "# Changelog
+        $mixedVersions = '# Changelog
 
 All notable changes to test-project will be documented in this file.
 
@@ -262,7 +262,7 @@ All notable changes to test-project will be documented in this file.
 
 - Older version without date
 
-";
+';
         File::put($path, $mixedVersions);
 
         $latestVersion = ChangelogHelper::getLatestVersion();
@@ -273,17 +273,17 @@ All notable changes to test-project will be documented in this file.
 
     it('finds changelog in parent directories up to git root', function () {
         // Create a temporary directory structure with a git repo
-        $tempDir = sys_get_temp_dir() . '/changelog_test_' . uniqid();
-        $subDir = $tempDir . '/subdir/nested';
+        $tempDir = sys_get_temp_dir().'/changelog_test_'.uniqid();
+        $subDir = $tempDir.'/subdir/nested';
 
         // Create directory structure
         mkdir($subDir, 0755, true);
 
         // Create a .git directory in the root
-        mkdir($tempDir . '/.git', 0755, true);
+        mkdir($tempDir.'/.git', 0755, true);
 
         // Create a CHANGELOG.md in the root
-        $rootChangelog = $tempDir . '/CHANGELOG.md';
+        $rootChangelog = $tempDir.'/CHANGELOG.md';
         file_put_contents($rootChangelog, "# Changelog\n\n## [unreleased]\n\n- Root changelog\n");
 
         // Change to subdirectory and temporarily override config
@@ -299,7 +299,7 @@ All notable changes to test-project will be documented in this file.
 
             $this->assertEquals(realpath($rootChangelog), realpath($foundPath));
             $this->assertTrue(file_exists($rootChangelog));
-            $this->assertFalse(file_exists($subDir . '/CHANGELOG.md'));
+            $this->assertFalse(file_exists($subDir.'/CHANGELOG.md'));
 
         } finally {
             // Restore original directory and config
@@ -313,8 +313,8 @@ All notable changes to test-project will be documented in this file.
 
     it('falls back to config path when no git root found', function () {
         // Create a temporary directory structure WITHOUT a git repo
-        $tempDir = sys_get_temp_dir() . '/changelog_test_no_git_' . uniqid();
-        $subDir = $tempDir . '/subdir/nested';
+        $tempDir = sys_get_temp_dir().'/changelog_test_no_git_'.uniqid();
+        $subDir = $tempDir.'/subdir/nested';
 
         // Create directory structure (no .git directory)
         mkdir($subDir, 0755, true);
@@ -331,7 +331,7 @@ All notable changes to test-project will be documented in this file.
         try {
             // Should fall back to config path since no git root found
             $foundPath = ChangelogHelper::findChangelogPath();
-            $expectedPath = $tempDir . '/CHANGELOG.md';
+            $expectedPath = $tempDir.'/CHANGELOG.md';
 
             $this->assertEquals($expectedPath, $foundPath);
 
@@ -351,7 +351,7 @@ All notable changes to test-project will be documented in this file.
         $path = ChangelogHelper::path();
         $originalContent = File::get($path);
 
-        $testChangelog = "# Changelog
+        $testChangelog = '# Changelog
 
 All notable changes to test-project will be documented in this file.
 
@@ -367,7 +367,7 @@ All notable changes to test-project will be documented in this file.
 
 - Initial release
 
-";
+';
         File::put($path, $testChangelog);
 
         try {
@@ -379,9 +379,9 @@ All notable changes to test-project will be documented in this file.
             $content = ChangelogHelper::parse();
 
             // Check that the new version was created with the exact version specified
-            $this->assertArrayHasKey('## [3.2.1] - ' . now()->format('Y-m-d'), $content);
-            $this->assertArrayHasKey('Added', $content['## [3.2.1] - ' . now()->format('Y-m-d')]);
-            $this->assertContains('New feature to be released', $content['## [3.2.1] - ' . now()->format('Y-m-d')]['Added']);
+            $this->assertArrayHasKey('## [3.2.1] - '.now()->format('Y-m-d'), $content);
+            $this->assertArrayHasKey('Added', $content['## [3.2.1] - '.now()->format('Y-m-d')]);
+            $this->assertContains('New feature to be released', $content['## [3.2.1] - '.now()->format('Y-m-d')]['Added']);
 
             // Check that unreleased section is now empty
             $this->assertEmpty($content[ChangelogHelper::$identifierUnreleasedHeading]);
@@ -394,14 +394,15 @@ All notable changes to test-project will be documented in this file.
 });
 
 // Helper function to recursively delete directories
-function deleteDirectory($dir) {
-    if (!is_dir($dir)) {
+function deleteDirectory($dir)
+{
+    if (! is_dir($dir)) {
         return;
     }
 
     $files = array_diff(scandir($dir), ['.', '..']);
     foreach ($files as $file) {
-        $path = $dir . '/' . $file;
+        $path = $dir.'/'.$file;
         if (is_dir($path)) {
             deleteDirectory($path);
         } else {

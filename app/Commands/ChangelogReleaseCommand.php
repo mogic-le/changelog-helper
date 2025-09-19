@@ -61,6 +61,7 @@ class ChangelogReleaseCommand extends Command implements PromptsForMissingInput
                     break;
                 default:
                     $this->error("Invalid release level: {$versionInput}. Use 'major', 'minor', 'patch', or a specific version number (e.g., '3.2.1').");
+
                     return self::FAILURE;
             }
             $this->info('New version: '.$version);
@@ -72,6 +73,7 @@ class ChangelogReleaseCommand extends Command implements PromptsForMissingInput
             $this->comment('New version released successfully');
         } else {
             $this->error('Failed to release new version. Check if there are unreleased changes.');
+
             return self::FAILURE;
         }
 

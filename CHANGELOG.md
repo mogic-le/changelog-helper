@@ -4,6 +4,12 @@ All notable changes to the changelog-helper will be documented in this file.
 
 ## [unreleased]
 
+## [1.2.2] - 2025-09-19
+
+### Fixed
+
+- Codestyle
+
 ## [1.2.1] - 2025-09-19
 
 ### Changed
