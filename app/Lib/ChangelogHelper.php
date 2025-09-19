@@ -413,12 +413,19 @@ class ChangelogHelper
     {
         $content = self::parse();
         $date = Carbon::now()->format('Y-m-d');
+        $releaseKey = "## [{$major}.{$minor}.{$patch}] - {$date}";
 
-        if (empty($content["## [{$major}.{$minor}.{$patch}] - {$date}"])) {
-            $content["## [{$major}.{$minor}.{$patch}] - {$date}"] = $content[self::$identifierUnreleasedHeading];
+        // Check if unreleased content exists
+        if (empty($content[self::$identifierUnreleasedHeading])) {
+            // No unreleased content to release
+            return false;
+        }
+
+        if (empty($content[$releaseKey])) {
+            $content[$releaseKey] = $content[self::$identifierUnreleasedHeading];
             $content[self::$identifierUnreleasedHeading] = [];
         } else {
-            $content["## [{$major}.{$minor}.{$patch}] - {$date}"] = array_merge($content["## [{$major}.{$minor}.{$patch}] - {$date}"], $content[self::$identifierUnreleasedHeading]);
+            $content[$releaseKey] = array_merge($content[$releaseKey], $content[self::$identifierUnreleasedHeading]);
             $content[self::$identifierUnreleasedHeading] = [];
         }
 

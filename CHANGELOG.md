@@ -4,9 +4,15 @@ All notable changes to the changelog-helper will be documented in this file.
 
 ## [unreleased]
 
+### Added
+
+- Release command now accepts specific version numbers (e.g., 3.2.1) in addition to release levels (major, minor, patch)
+
+
 ### Changed
 
 - Add default category "Changed" for bullet points before first subheader
+- Update packages
 
 ### Fixed
 

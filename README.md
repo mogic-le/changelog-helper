@@ -59,6 +59,10 @@ Or you can use the same command in a interactive mode:
 
     changelog-helper release
 
+Or you can use the same command and add a release number:
+
+    changelog-helper release 3.2.1
+
 ### Environmet variables
 
 * CHANGELOG_RELEASE_MESSAGE

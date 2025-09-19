@@ -12,16 +12,16 @@ use function Laravel\Prompts\select;
 
 class ChangelogReleaseCommand extends Command implements PromptsForMissingInput
 {
-    public $signature = 'release {level : The release level} {tag : Try to create a git tag}';
+    public $signature = 'release {version : The version number (e.g., 3.2.1) or release level (major, minor, patch)} {tag : Try to create a git tag}';
 
-    public $description = 'Create a new release of unreleased changes';
+    public $description = 'Create a new release of unreleased changes. Use a specific version (e.g., 3.2.1) or release level (major, minor, patch)';
 
     protected function promptForMissingArgumentsUsing(): array
     {
         return [
-            'level' => fn () => select(
-                label: 'Select a changelog type:',
-                options: ChangelogReleaseLevel::toArray(),
+            'version' => fn () => select(
+                label: 'Select a release level or enter a specific version:',
+                options: array_merge(['custom'], ChangelogReleaseLevel::toArray()),
                 default: ChangelogReleaseLevel::MINOR->value,
             ),
             'tag' => fn () => confirm(
@@ -36,28 +36,44 @@ class ChangelogReleaseCommand extends Command implements PromptsForMissingInput
         $latestVersion = ChangelogHelper::getLatestVersion();
         $latestVersion = $latestVersion ?? '0.0.0';
 
-        $level = $this->argument('level');
+        $versionInput = $this->argument('version');
         $tag = $this->argument('tag');
 
         $this->info('Latest version: '.$latestVersion);
 
-        $version = semver($latestVersion);
-        switch ($level) {
-            case ChangelogReleaseLevel::MAJOR->value:
-                $version->incrementMajor();
-                break;
-            case ChangelogReleaseLevel::MINOR->value:
-                $version->incrementMinor();
-                break;
-            case ChangelogReleaseLevel::PATCH->value:
-                $version->incrementPatch();
-                break;
+        // Check if the input is a specific version number or a release level
+        if ($this->isVersionNumber($versionInput)) {
+            // Use the specific version provided
+            $version = semver($versionInput);
+            $this->info('Using specified version: '.$version);
+        } else {
+            // Treat as release level and increment from latest version
+            $version = semver($latestVersion);
+            switch ($versionInput) {
+                case ChangelogReleaseLevel::MAJOR->value:
+                    $version->incrementMajor();
+                    break;
+                case ChangelogReleaseLevel::MINOR->value:
+                    $version->incrementMinor();
+                    break;
+                case ChangelogReleaseLevel::PATCH->value:
+                    $version->incrementPatch();
+                    break;
+                default:
+                    $this->error("Invalid release level: {$versionInput}. Use 'major', 'minor', 'patch', or a specific version number (e.g., '3.2.1').");
+                    return self::FAILURE;
+            }
+            $this->info('New version: '.$version);
         }
-        $this->info('New version: '.$version);
 
-        ChangeLogHelper::release($version->major, $version->minor, $version->patch);
+        $releaseResult = ChangeLogHelper::release($version->major, $version->minor, $version->patch);
 
-        $this->comment('New version released successfully');
+        if ($releaseResult) {
+            $this->comment('New version released successfully');
+        } else {
+            $this->error('Failed to release new version. Check if there are unreleased changes.');
+            return self::FAILURE;
+        }
 
         if ($tag) {
             exec('git add CHANGELOG.md && git commit -m "'.str_replace('{version}', config('changelog.version_prefix').$version, config('changelog.release_message')).'"');
@@ -66,5 +82,14 @@ class ChangelogReleaseCommand extends Command implements PromptsForMissingInput
         }
 
         return self::SUCCESS;
+    }
+
+    /**
+     * Check if the input is a version number (e.g., "3.2.1") rather than a release level
+     */
+    private function isVersionNumber(string $input): bool
+    {
+        // Check if the input matches semantic version pattern (X.Y.Z)
+        return preg_match('/^\d+\.\d+\.\d+$/', $input) === 1;
     }
 }

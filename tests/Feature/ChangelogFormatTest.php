@@ -345,6 +345,52 @@ All notable changes to test-project will be documented in this file.
             deleteDirectory($tempDir);
         }
     });
+
+    it('release command accepts specific version numbers', function () {
+        // Create a test changelog with some content
+        $path = ChangelogHelper::path();
+        $originalContent = File::get($path);
+
+        $testChangelog = "# Changelog
+
+All notable changes to test-project will be documented in this file.
+
+## [unreleased]
+
+### Added
+
+- New feature to be released
+
+## [1.0.0] - 2024-01-01
+
+### Fixed
+
+- Initial release
+
+";
+        File::put($path, $testChangelog);
+
+        try {
+            // Test the release method with a specific version
+            $result = ChangelogHelper::release(3, 2, 1);
+            $this->assertTrue($result);
+
+            // Parse the updated changelog
+            $content = ChangelogHelper::parse();
+
+            // Check that the new version was created with the exact version specified
+            $this->assertArrayHasKey('## [3.2.1] - ' . now()->format('Y-m-d'), $content);
+            $this->assertArrayHasKey('Added', $content['## [3.2.1] - ' . now()->format('Y-m-d')]);
+            $this->assertContains('New feature to be released', $content['## [3.2.1] - ' . now()->format('Y-m-d')]['Added']);
+
+            // Check that unreleased section is now empty
+            $this->assertEmpty($content[ChangelogHelper::$identifierUnreleasedHeading]);
+
+        } finally {
+            // Restore original content
+            File::put($path, $originalContent);
+        }
+    });
 });
 
 // Helper function to recursively delete directories
