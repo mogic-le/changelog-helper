@@ -4,13 +4,18 @@ All notable changes to the changelog-helper will be documented in this file.
 
 ## [unreleased]
 
+## [1.2.1] - 2025-09-19
+
+### Changed
+
+- PHP to v8.3.0 upgrade
+
 ## [1.2.0] - 2025-09-19
 
 ### Added
 
 - Release command now accepts specific version numbers (e.g., 3.2.1) in addition to release levels (major, minor, patch)
 - Added new release build
-
 
 ### Changed
 
