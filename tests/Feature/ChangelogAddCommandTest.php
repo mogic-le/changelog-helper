@@ -28,7 +28,6 @@ describe('add to changelog', function () {
         $testfile = File::get(base_path(config('changelog.filename')));
 
         $this->assertSame($template, $testfile);
-
     });
 
     it('checks if another line is added', function () use ($filename) {
