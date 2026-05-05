@@ -77,7 +77,11 @@ To build a new release version, we have to create the build with the release tag
     git add ./builds/changelog-helper
     git add ./CHANGELOG.md
     ./changelog-helper release minor 1.x.x
-    git push && git git push --tags
+    git push && git push --tags
+
+The same flow is wrapped in `release.sh`, which prints the latest version and prompts for the next one (major/minor/patch/custom):
+
+    ./release.sh
 
 ## Author
 
