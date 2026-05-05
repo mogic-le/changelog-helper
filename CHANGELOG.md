@@ -4,6 +4,12 @@ All notable changes to the changelog-helper will be documented in this file.
 
 ## [unreleased]
 
+## [1.3.0] - 2026-05-05
+
+### Changed
+
+- Update packages
+
 ## [1.2.4] - 2025-09-19
 
 ### Added
