@@ -70,7 +70,7 @@ class ChangelogReleaseCommand extends Command implements PromptsForMissingInput
             );
         }
 
-        $releaseResult = ChangeLogHelper::release($version->major, $version->minor, $version->patch);
+        $releaseResult = ChangelogHelper::release($version->major, $version->minor, $version->patch);
 
         if ($releaseResult) {
             $this->comment('New version released successfully');

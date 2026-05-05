@@ -4,6 +4,7 @@ namespace Tests;
 
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Application;
+use Laravel\Prompts\Prompt;
 
 trait CreatesApplication
 {
@@ -16,7 +17,7 @@ trait CreatesApplication
 
         $app->make(Kernel::class)->bootstrap();
 
-        \Laravel\Prompts\Prompt::fallbackWhen(true);
+        Prompt::fallbackWhen(true);
 
         return $app;
     }

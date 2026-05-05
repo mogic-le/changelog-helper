@@ -4,6 +4,10 @@ All notable changes to the changelog-helper will be documented in this file.
 
 ## [unreleased]
 
+### Fixed
+
+- Code style
+
 ## [1.3.0] - 2026-05-05
 
 ### Added
