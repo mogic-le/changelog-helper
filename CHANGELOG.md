@@ -10,6 +10,7 @@ All notable changes to the changelog-helper will be documented in this file.
 
 - Update packages
 - Show question for new commit and tag after show new version
+- Keep a newline at the end of file
 
 ## [1.2.4] - 2025-09-19
 

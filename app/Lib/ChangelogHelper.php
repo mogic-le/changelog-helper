@@ -249,7 +249,7 @@ class ChangelogHelper
         $contentFile = File::exists($path) ? File::get($path) : '';
         $prefixContent = substr($contentFile, 0, strpos($contentFile, self::$identifierUnreleasedHeading));
 
-        $finalContent = $prefixContent.$content;
+        $finalContent = rtrim($prefixContent.$content, "\n")."\n";
 
         // Save the markdown file
         File::put($path, $finalContent);
