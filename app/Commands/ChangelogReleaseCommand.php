@@ -12,7 +12,7 @@ use function Laravel\Prompts\select;
 
 class ChangelogReleaseCommand extends Command implements PromptsForMissingInput
 {
-    public $signature = 'release {version : The version number (e.g., 3.2.1) or release level (major, minor, patch)} {tag : Try to create a git tag}';
+    public $signature = 'release {version : The version number (e.g., 3.2.1) or release level (major, minor, patch)} {tag? : Try to create a git tag}';
 
     public $description = 'Create a new release of unreleased changes. Use a specific version (e.g., 3.2.1) or release level (major, minor, patch)';
 
@@ -23,10 +23,6 @@ class ChangelogReleaseCommand extends Command implements PromptsForMissingInput
                 label: 'Select a release level or enter a specific version:',
                 options: array_merge(['custom'], ChangelogReleaseLevel::toArray()),
                 default: ChangelogReleaseLevel::MINOR->value,
-            ),
-            'tag' => fn () => confirm(
-                label: 'Commit and create a tag?',
-                default: false
             ),
         ];
     }
@@ -65,6 +61,13 @@ class ChangelogReleaseCommand extends Command implements PromptsForMissingInput
                     return self::FAILURE;
             }
             $this->info('New version: '.$version);
+        }
+
+        if ($tag === null) {
+            $tag = confirm(
+                label: 'Commit and create a tag?',
+                default: false
+            );
         }
 
         $releaseResult = ChangeLogHelper::release($version->major, $version->minor, $version->patch);
