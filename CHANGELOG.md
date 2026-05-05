@@ -6,6 +6,10 @@ All notable changes to the changelog-helper will be documented in this file.
 
 ## [1.3.0] - 2026-05-05
 
+### Added
+
+- Added new release build for 1.3.0
+
 ### Changed
 
 - Update packages
