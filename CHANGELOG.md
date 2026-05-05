@@ -4,6 +4,10 @@ All notable changes to the changelog-helper will be documented in this file.
 
 ## [unreleased]
 
+### Fixed
+
+- Test with empty newline
+
 ## [1.4.0] - 2026-05-05
 
 ### Added
