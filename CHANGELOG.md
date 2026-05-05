@@ -4,6 +4,10 @@ All notable changes to the changelog-helper will be documented in this file.
 
 ## [unreleased]
 
+### Fixed
+
+- CS
+
 ## [1.4.1] - 2026-05-05
 
 ### Added
